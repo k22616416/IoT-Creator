@@ -1,0 +1,57 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+// Include any default variable overrides here (though functions won't be available)
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
+// Required
+@import "../node_modules/bootstrap/scss/functions";
+
+// Default variable overrides
+// $body-bg: #000;
+// $body-color: #111;
+
+// Required
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+// Optional Bootstrap components here
+@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+// etc
+
+
+// px：絕對單位，代表螢幕中每個「點」( pixel )。
+// em：相對單位，每個子元素透過「倍數」乘以父元素的 px 值。
+// rem：相對單位，每個元素透過「倍數」乘以根元素的 px 值。
+// %：相對單位，每個子元素透過「百分比」乘以父元素的 px 值。
+
+
+$node_bg_color: #aaa;
+$node_border_color: #666;
+$node_border_type: solid;
+$node_border_width: 2px;
+$node_width: 3rem;
+$node_height: 3rem;
+.node {
+  border: $node_border_width $node_border_type $node_border_color;
+  border-radius: 50%;
+  width: $node_width;
+  height: $node_height;
+  background-color: $node_bg_color;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  .node_content{
+    text-align: center;
+    display: flex;
+    align-items: center;
+  }
+}
+
+
+
+
