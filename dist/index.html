@@ -2,23 +2,42 @@
 <html lang="zh-tw">
 
 <head>
+
+
+
+  <!-- <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.min.css"> -->
+
+
+
+  <link rel="stylesheet" href="/jquery-ui.min.cbcc6734.css">
   <link rel="stylesheet" href="/style.78032849.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="/style.78032849.js"></script></head>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>$(function () {
+  $(".node").draggable({
+    containment: "parent",
+    scroll: false
+  });
+  $(".node").on("drag", function (event, ui) {
+    console.log("pos:" + ui.position.left + "," + ui.position.top);
+  });
+});</script>
+<script src="/jquery-ui.min.cbcc6734.js"></script><script src="/style.78032849.js"></script></head>
 
 <body>
-  <div class="container">
+  <div class="container border" id="canves">
     <div class="row">
       <div class="col">
         <div class="node">
           <div class="node_content">1</div>
         </div>
       </div>
+
     </div>
   </div>
 
-  <script src="/iot.e31bb0bc.js"></script>
 </body>
 
 </html>
