@@ -29,13 +29,15 @@
 // rem：相對單位，每個元素透過「倍數」乘以根元素的 px 值。
 // %：相對單位，每個子元素透過「百分比」乘以父元素的 px 值。
 
-
+// node相關變數
 $node_bg_color: #fff;
 $node_border_color: #666;
 $node_border_type: solid;
 $node_border_width: 2px;
 $node_width: 3rem;
 $node_height: 3rem;
+
+// node class
 .node {
   border: $node_border_width $node_border_type $node_border_color;
   border-radius: 50%;
@@ -45,13 +47,25 @@ $node_height: 3rem;
   display: flex;
   align-items: center;
   text-align: center;
+  z-index: 1;
   .node_content{
     text-align: center;
     display: flex;
     align-items: center;
   }
+  
+}
+.overlap{
+  box-shadow:0 0 7px 3px rgba(248, 139, 139, 0.5);
 }
 
 
+// canvas
+#canvas{
+  min-width: 320px;
+  min-height: 634px;
+  border: 2px solid #666;
+  padding: 0;
+}
 
 

@@ -11309,11 +11309,23 @@ progress {
   display: flex;
   align-items: center;
   text-align: center;
+  z-index: 1;
 }
 .node .node_content {
   text-align: center;
   display: flex;
   align-items: center;
+}
+
+.overlap {
+  box-shadow: 0 0 7px 3px rgba(248, 139, 139, 0.5);
+}
+
+#canvas {
+  min-width: 320px;
+  min-height: 634px;
+  border: 2px solid #666;
+  padding: 0;
 }
 
 

@@ -2,40 +2,47 @@
 <html lang="zh-tw">
 
 <head>
-
-
-
-  <!-- <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.min.css"> -->
-
-
-
   <link rel="stylesheet" href="./jquery-ui-1.12.1/jquery-ui.min.css">
   <link rel="stylesheet" href="./css/style.css">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-    $(function () {
-      $(".node").draggable({
-        containment: "parent",
-        scroll: false
-
-      });
-      $(".node").on("drag", function (event, ui) {
-        console.log("pos:" + ui.position.left + "," + ui.position.top);
-      });
-    });
-
-  </script>
+  <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+  <script src="./jquery-ui-1.12.1/jquery-ui.min.js"></script>
+  <script src="./jquery-ui-1.12.1/jquery.ui.touch-punch.min.js"></script>
+  <script src="./index.js"></script>
 </head>
 
 <body>
-  <div class="container border" id='canves'>
+  <div class="container p-4">
     <div class="row">
       <div class="col">
+        <span>Screen size:</span>
+        <span id="screen_size"></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" id='canvas'>
+        <span id="canvas_size"></span>
         <div class="node">
-          <div class="node_content">1</div>
+          <div class="node_content"></div>
+          <div class="debug text-center"></div>
+        </div>
+        <div class="node">
+          <div class="node_content"></div>
+          <div class="debug text-center"></div>
+        </div>
+        <div class="node">
+          <div class="node_content"></div>
+          <div class="debug text-center"></div>
+        </div>
+        <div class="node">
+          <div class="node_content"></div>
+          <div class="debug text-center"></div>
+        </div>
+        <div class="node">
+          <div class="node_content"></div>
+          <div class="debug text-center"></div>
         </div>
       </div>
 
