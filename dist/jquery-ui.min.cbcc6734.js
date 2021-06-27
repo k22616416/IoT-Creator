@@ -117,7 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -149,7 +149,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -184,12 +184,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"jquery-ui-1.12.1/jquery-ui.min.css":[function(require,module,exports) {
+},{"./bundle-url":"C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"jquery-ui-1.12.1/jquery-ui.min.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./images\\ui-icons_444444_256x240.png":[["ui-icons_444444_256x240.c061cb9c.png","jquery-ui-1.12.1/images/ui-icons_444444_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_444444_256x240.png"],"./images\\ui-icons_555555_256x240.png":[["ui-icons_555555_256x240.ceca3bc7.png","jquery-ui-1.12.1/images/ui-icons_555555_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_555555_256x240.png"],"./images\\ui-icons_ffffff_256x240.png":[["ui-icons_ffffff_256x240.760fd338.png","jquery-ui-1.12.1/images/ui-icons_ffffff_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_ffffff_256x240.png"],"./images\\ui-icons_777620_256x240.png":[["ui-icons_777620_256x240.6b8484ce.png","jquery-ui-1.12.1/images/ui-icons_777620_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_777620_256x240.png"],"./images\\ui-icons_cc0000_256x240.png":[["ui-icons_cc0000_256x240.52282b06.png","jquery-ui-1.12.1/images/ui-icons_cc0000_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_cc0000_256x240.png"],"./images\\ui-icons_777777_256x240.png":[["ui-icons_777777_256x240.d7ade047.png","jquery-ui-1.12.1/images/ui-icons_777777_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_777777_256x240.png"],"_css_loader":"C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./images\\ui-icons_444444_256x240.png":[["ui-icons_444444_256x240.c061cb9c.png","jquery-ui-1.12.1/images/ui-icons_444444_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_444444_256x240.png"],"./images\\ui-icons_555555_256x240.png":[["ui-icons_555555_256x240.ceca3bc7.png","jquery-ui-1.12.1/images/ui-icons_555555_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_555555_256x240.png"],"./images\\ui-icons_ffffff_256x240.png":[["ui-icons_ffffff_256x240.760fd338.png","jquery-ui-1.12.1/images/ui-icons_ffffff_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_ffffff_256x240.png"],"./images\\ui-icons_777620_256x240.png":[["ui-icons_777620_256x240.6b8484ce.png","jquery-ui-1.12.1/images/ui-icons_777620_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_777620_256x240.png"],"./images\\ui-icons_cc0000_256x240.png":[["ui-icons_cc0000_256x240.52282b06.png","jquery-ui-1.12.1/images/ui-icons_cc0000_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_cc0000_256x240.png"],"./images\\ui-icons_777777_256x240.png":[["ui-icons_777777_256x240.d7ade047.png","jquery-ui-1.12.1/images/ui-icons_777777_256x240.png"],"jquery-ui-1.12.1/images/ui-icons_777777_256x240.png"],"_css_loader":"C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -217,7 +217,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50133" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52748" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -393,5 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+},{}]},{},["C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
 //# sourceMappingURL=/jquery-ui.min.cbcc6734.js.map

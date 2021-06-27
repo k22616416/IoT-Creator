@@ -118,11 +118,11 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"index.js":[function(require,module,exports) {
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -132,18 +132,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 // import * as $ from 'jquery';
 var overlapOffset = 0;
 var onTop;
+var node_len = 5;
+var node_list = new Array();
+var node_container_list = new Array();
 $(document).on('ready', function () {
+  for (i = 0; i < node_len; i++) {
+    var t = new Node($('#canvas'), i);
+    node_list.push(t);
+    node_container_list.push(t.container);
+  }
+
   var line = new CreateLine();
   $('#screen_size').html($(document).width() + " x " + $(document).height());
   $('#canvas_size').html($('#canvas').width() + " x " + $('#canvas').height());
-  $.each($('.node'), function (key, value) {
+  $.each(node_container_list, function (key, value) {
     $(value).css('z-index', key);
 
-    if (key == $('.node').length - 1) {
+    if (key == node_container_list.length - 1) {
       onTop = this;
     }
   });
-  $(".node").draggable({
+  $(node_container_list).draggable({
     containment: "parent",
     scroll: false,
     drag: function drag(event, ui) {
@@ -154,9 +163,18 @@ $(document).on('ready', function () {
         $(closest).addClass("overlap");
         $(event.target).addClass('overlap');
         line.Destroy();
+        var f = node_list.find(function (value, key) {
+          return value.container == event.target;
+        });
+        f.isOverlap = true;
+        f.overlap_target = closest;
+        f = node_list.find(function (value, key) {
+          return value.container == closest;
+        });
+        f.isOverlap = true;
+        f.overlap_target = event.target;
       } else {
-        $(closest).removeClass("overlap");
-        $(event.target).removeClass('overlap');
+        $(node_container_list).removeClass("overlap"); // $(event.target).removeClass('overlap');
 
         if (line.line === undefined) {
           line.Init(closest, event.target);
@@ -164,15 +182,29 @@ $(document).on('ready', function () {
         }
 
         line.ReDraw(closest, event.target);
+        node_list.forEach(function (value, key) {
+          value.isOverlap = false;
+          value.overlap_target = undefined;
+        });
       }
     },
     start: function start(event, ui) {
       $(onTop).css('z-index', $(this).css('z-index'));
-      $(this).css('z-index', $('.node').length - 1);
+      $(this).css('z-index', node_container_list.length - 1);
       onTop = this;
     },
     stop: function stop(event, ui) {
       line.Destroy();
+      var f = node_list.find(function (value, key) {
+        return value.container == event.target;
+      });
+
+      if (f.isOverlap) {
+        $(f.container).addClass('connected');
+        $(f.overlap_target).addClass('connected');
+        console.log('overlap');
+        return;
+      }
     }
   });
 });
@@ -235,6 +267,68 @@ function isOverlap(idOne, idTwo) {
   return leftTop || rightTop || leftBottom || rightBottom || topLine && bottomLine && leftLine && rightLine;
 }
 
+var Node = // DOM elements
+// 整個node的DOM
+// node顯示文字的DOM
+//連接的node
+// variables
+// node顯示的文字
+// other
+
+/**
+ * 
+ * @constructor
+ * @param {HTMLElement} canvas node擺設的畫布
+ * @param {String} text node顯示的文字
+ * @param {Object} size node的大小
+ */
+function Node(canvas) {
+  var text = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var size = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {
+    width: "3em",
+    height: "3em"
+  };
+
+  _classCallCheck(this, Node);
+
+  _defineProperty(this, "container", undefined);
+
+  _defineProperty(this, "node_content", undefined);
+
+  _defineProperty(this, "connected_node", new Array());
+
+  _defineProperty(this, "overlap_target", undefined);
+
+  _defineProperty(this, "id", undefined);
+
+  _defineProperty(this, "text", "");
+
+  _defineProperty(this, "defultSize", ["3em", "3em"]);
+
+  _defineProperty(this, "size", undefined);
+
+  _defineProperty(this, "isOverlap", false);
+
+  _defineProperty(this, "group", {
+    id: undefined,
+    groupDOM: undefined // 群組的DOM
+
+  });
+
+  if (canvas == undefined) throw new ReferenceError('canvas is undefined.');
+  this.container = $('<div class="node"><div')[0];
+
+  if (size != undefined) {
+    $(this.container).css('width', size.width);
+    $(this.container).css('height', size.height);
+  }
+
+  this.node_content = $('<div class="node_content"></div>')[0];
+  $(this.container).append(this.node_content);
+  $(canvas).append(this.container);
+  $(this.node_content).html(text);
+};
+
 var CreateLine = /*#__PURE__*/function () {
   function CreateLine() {
     _classCallCheck(this, CreateLine);
@@ -277,7 +371,7 @@ var CreateLine = /*#__PURE__*/function () {
       // style += "-o-transform-origin:0% 0%;"
       // style += "-webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .1);"
 
-      style += "box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .1);";
+      style += "box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, .1);";
       style += "z-index:99;";
       style += "border:1px dashed rgba(50,50,50,0.3)";
       return style; // return $("<div style='" + style + "'></div>");
@@ -358,7 +452,7 @@ var CreateLine = /*#__PURE__*/function () {
 
   return CreateLine;
 }();
-},{}],"C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{}],"C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -386,7 +480,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50133" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52748" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -562,5 +656,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["C:/Users/tingwei/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["C:/Users/kk013/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/IoT-Creator.e31bb0bc.js.map
