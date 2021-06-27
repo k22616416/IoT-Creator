@@ -27,23 +27,16 @@ $(document).on('ready', function () {
                 $(closest).addClass("overlap");
                 $(event.target).addClass('overlap');
                 line.Destroy();
-                // 在each內return等於continue，return false等於break
-                // return false;
             }
             else {
                 $(closest).removeClass("overlap");
                 $(event.target).removeClass('overlap');
                 if (line.line === undefined) {
                     line.Init(closest, event.target);
+                    return;
                 }
-                else {
-                    line.ReDraw(closest, event.target);
-
-                }
+                line.ReDraw(closest, event.target);
             }
-            // $(getClosestNode($('.node'), event.target)).addClass('overlap');
-            // $(event.target).children('.debug').html('offset:' + event.offsetX + ',' + event.offsetY + "<br>page:" + event.pageX +',' + event.pageY);
-            // console.log("pos:" + ui.position.left + "," + ui.position.top);
         },
         start: function (event, ui) {
             $(onTop).css('z-index', $(this).css('z-index'));
@@ -58,26 +51,32 @@ $(document).on('ready', function () {
 });
 
 function getClosestNode(_list, self) {
-    var target = _list[0];
-
+    var target = undefined;
     var self_pos = [
         $(self).offset().left + $(self).width() / 2,
         $(self).offset().top + $(self).height() / 2
     ];
-    var closest_dis = Math.sqrt(
-        Math.pow(Math.abs(($(_list[0]).offset().left + $(_list[0]).width() / 2) - self_pos[0]), 2) +
-        Math.pow(Math.abs(($(_list[0]).offset().top + $(_list[0]).height() / 2) - self_pos[1]), 2)
-    );
+    var dx, dy, closest_dis;
+
     var dis;
     var c_pos;
+
     $.each(_list, function (key, value) {
-        if (key == 0 || value == self) return;
+        if (value == self) return;
         c_pos = [
             $(value).offset().left + $(value).width() / 2,
             $(value).offset().top + $(value).height() / 2
         ];
-        var dx = Math.abs(self_pos[0] - c_pos[0]);
-        var dy = Math.abs(self_pos[1] - c_pos[1]);
+        if (target == undefined) {
+            target = value;
+            dx = Math.abs(self_pos[0] - c_pos[0]);
+            dy = Math.abs(self_pos[1] - c_pos[1]);
+            closest_dis = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+            return;
+        }
+
+        dx = Math.abs(self_pos[0] - c_pos[0]);
+        dy = Math.abs(self_pos[1] - c_pos[1]);
         dis = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 
         if (dis < closest_dis) {
@@ -85,7 +84,7 @@ function getClosestNode(_list, self) {
             closest_dis = dis;
         }
     });
-    return { target, dis, c_pos };
+    return { target, closest_dis, c_pos };
 }
 
 
@@ -135,22 +134,18 @@ class CreateLine {
             by = by - ay;
         }
         var angle = Math.atan((ay - by) / (bx - ax));
-        console.log('angle: ' + angle);
 
         angle = (angle * 180 / Math.PI);
-        console.log('angle: ' + angle);
         angle = -angle;
-        console.log('angle: ' + angle);
 
         var length = Math.sqrt((ax - bx) * (ax - bx) + (ay - by) * (ay - by));
-        console.log('length: ' + length);
 
         var style = ""
         style += "left:" + (ax) + "px;"
         style += "top:" + (ay) + "px;"
         style += "width:" + length + "px;"
         style += "height:1px;"
-        style += "background-color: rgba(50,50,50,0.5);"
+        // style += "background-color: rgba(50,50,50,0.5);"
         style += "position:absolute;"
         style += "transform:rotate(" + angle + "deg);"
         // style += "-ms-transform:rotate(" + angle + "deg);"
@@ -164,6 +159,7 @@ class CreateLine {
         // style += "-webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .1);"
         style += "box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .1);"
         style += "z-index:99;"
+        style += "border:1px dashed rgba(50,50,50,0.3)";
         return style;
         // return $("<div style='" + style + "'></div>");
     };
