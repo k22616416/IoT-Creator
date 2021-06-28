@@ -11307,18 +11307,20 @@ progress {
   height: 3rem;
   background-color: #fff;
   display: flex;
-  align-items: center;
-  text-align: center;
   z-index: 1;
 }
 .node .node_content {
   text-align: center;
-  display: flex;
   align-items: center;
+  margin: auto;
 }
 
 .overlap {
   box-shadow: 0 0 7px 3px rgba(248, 139, 139, 0.5);
+}
+
+.connected {
+  box-shadow: 0 0 7px 3px rgba(0, 255, 0, 0.5);
 }
 
 #canvas {

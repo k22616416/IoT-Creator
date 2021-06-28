@@ -5,17 +5,25 @@
 const overlapOffset = 0;
 
 var onTop;
+var node_len = 5;
+var node_list = new Array();
+var node_container_list = new Array();
 $(document).on('ready', function () {
+    for (i = 0; i < node_len; i++) {
+        var t = new Node($('#canvas'), i);
+        node_list.push(t);
+        node_container_list.push(t.container);
+    }
     var line = new CreateLine();
     $('#screen_size').html($(document).width() + " x " + $(document).height());
     $('#canvas_size').html($('#canvas').width() + " x " + $('#canvas').height())
-    $.each($('.node'), function (key, value) {
+    $.each(node_container_list, function (key, value) {
         $(value).css('z-index', key);
-        if (key == $('.node').length - 1) {
+        if (key == node_container_list.length - 1) {
             onTop = this;
         }
     })
-    $(".node").draggable({
+    $(node_container_list).draggable({
         containment: "parent",
         scroll: false,
         drag: function (event, ui) {
@@ -27,24 +35,50 @@ $(document).on('ready', function () {
                 $(closest).addClass("overlap");
                 $(event.target).addClass('overlap');
                 line.Destroy();
+                var f = node_list.find(function (value, key) {
+                    return value.container == event.target;
+                });
+                f.isOverlap = true;
+                f.overlap_target = closest;
+                f = node_list.find(function (value, key) {
+                    return value.container == closest;
+                });
+                f.isOverlap = true;
+                f.overlap_target = event.target;
             }
             else {
-                $(closest).removeClass("overlap");
-                $(event.target).removeClass('overlap');
+
+                $(node_container_list).removeClass("overlap");
+                // $(event.target).removeClass('overlap');
                 if (line.line === undefined) {
                     line.Init(closest, event.target);
                     return;
                 }
                 line.ReDraw(closest, event.target);
+
+                node_list.forEach(function (value, key) {
+                    value.isOverlap = false;
+                    value.overlap_target = undefined;
+                });
             }
         },
         start: function (event, ui) {
             $(onTop).css('z-index', $(this).css('z-index'));
-            $(this).css('z-index', $('.node').length - 1);
+            $(this).css('z-index', node_container_list.length - 1);
             onTop = this;
         },
         stop: function (event, ui) {
             line.Destroy();
+            var f = node_list.find(function (value, key) {
+                return value.container == event.target;
+            });
+            if (f.isOverlap) {
+                $(f.container).addClass('connected');
+                $(f.overlap_target).addClass('connected');
+                console.log('overlap');
+                return;
+            }
+
 
         }
     });
@@ -116,6 +150,52 @@ function isOverlap(idOne, idTwo) {
         (topLine && bottomLine && leftLine && rightLine);
 }
 
+class Node {
+    // DOM elements
+    container = undefined;  // 整個node的DOM
+    node_content = undefined;   // node顯示文字的DOM
+    connected_node = new Array(); //連接的node
+    overlap_target = undefined;
+
+
+    // variables
+    id = undefined;
+    text = "";   // node顯示的文字
+    defultSize = ["3em", "3em"];
+    size = undefined;
+    isOverlap = false;
+
+    // other
+    group = {
+        id: undefined,
+        groupDOM: undefined // 群組的DOM
+    };
+
+    /**
+     * 
+     * @constructor
+     * @param {HTMLElement} canvas node擺設的畫布
+     * @param {String} text node顯示的文字
+     * @param {Object} size node的大小
+     */
+    constructor(canvas, text = '', size = { width: "3em", height: "3em" }) {
+
+        if (canvas == undefined) throw new ReferenceError('canvas is undefined.');
+        this.container = $('<div class="node"><div')[0];
+        if (size != undefined) {
+            $(this.container).css('width', size.width);
+            $(this.container).css('height', size.height);
+        }
+
+
+        this.node_content = $('<div class="node_content"></div>')[0];
+        $(this.container).append(this.node_content);
+        $(canvas).append(this.container);
+        $(this.node_content).html(text);
+
+    }
+}
+
 class CreateLine {
 
     line;
@@ -157,7 +237,7 @@ class CreateLine {
         // style += "-o-transform:rotate(" + angle + "deg);"
         // style += "-o-transform-origin:0% 0%;"
         // style += "-webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .1);"
-        style += "box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, .1);"
+        style += "box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, .1);"
         style += "z-index:99;"
         style += "border:1px dashed rgba(50,50,50,0.3)";
         return style;
