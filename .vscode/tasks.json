@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run parcel",
+			"type": "shell",
+			"command": "parcel .\\index.html",
+			"group": "Custom_tasks",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
+		},
+		{
+			"label": "Run sass",
+			"type": "shell",
+			"command": "sass --watch .\\scss\\custom.scss:.\\css\\style.css",
+			"group": "Custom_tasks",
+			"presentation": {
+				"reveal": "always",
+				"panel": "new"
+			}
+		},
+		{
+			"label": "Run dev",
+			"dependsOn": [
+				"Run parcel",
+				"Run sass"
+			]
+		}
+	]
+}
