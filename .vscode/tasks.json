@@ -5,7 +5,7 @@
 			"label": "Run parcel",
 			"type": "shell",
 			"command": "parcel .\\index.html",
-			"group": "Custom_tasks",
+			"group": "test",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"
@@ -15,7 +15,7 @@
 			"label": "Run sass",
 			"type": "shell",
 			"command": "sass --watch .\\scss\\custom.scss:.\\css\\style.css",
-			"group": "Custom_tasks",
+			"group": "test",
 			"presentation": {
 				"reveal": "always",
 				"panel": "new"
